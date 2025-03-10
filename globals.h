@@ -14,14 +14,8 @@
 #define IMU_X_ACCEL_REG 0x3B // It is the x acceleration and rest of the registers are increamentally after it
 #define IMU_GYTO_X 0x43
 #define DEAD_ZONE 1.0
+#define Gravity 9.80665
 
-
-// struct system{
-//   uint16_t yaw_angle;
-//   uint16_t accel_x;
-//   uint16_t accel_y;
-//   uint16_t accel_z;
-// };
 
 
 extern float imu_data[12];
