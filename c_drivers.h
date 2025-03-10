@@ -12,6 +12,7 @@
 #include "globals.h"
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <stdio.h>
 
 
 typedef enum {
@@ -48,7 +49,7 @@ void c_pwm_11(uint8_t val); // Inverted | connected to the external LED
 void c_serial_begin(int boud_rate);
 void c_serial_write_char(char c);
 void c_serial_write(char* buffer, bool new_line);
-void c_serial_write_float(float val, bool new_line)
+void c_serial_write_float(float val, bool new_line);
 
 // Same as sei and cli
 // better to used them than these

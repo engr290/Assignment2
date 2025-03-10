@@ -25,8 +25,8 @@ void c_serial_write_char(char c) {
 
 
 void c_serial_write(char* buffer, bool new_line) {
-	while (*str) {
-        c_serial_write_char(*str++);
+	while (*buffer) {
+        c_serial_write_char(*buffer++);
     }
 
 	if (new_line) {
@@ -36,6 +36,6 @@ void c_serial_write(char* buffer, bool new_line) {
 
 void c_serial_write_float(float val, bool new_line){
 	char buffer[20];
-    dtostrf(value, 6, 2, buffer);  // Format float into string: 6 digits total, 2 after the decimal
+  snprintf(buffer, sizeof(buffer), "%.2f", val);
 	c_serial_write(buffer, new_line);
 }
