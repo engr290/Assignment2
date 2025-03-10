@@ -15,7 +15,8 @@
 #define IMU_GYTO_X 0x43
 #define DEAD_ZONE 1.0
 #define Gravity 9.80665
-
+#define ACCEL_SCALE 16384.0  // ±2g range
+#define GYRO_SCALE 131.0     // ±250°/s range
 
 
 extern float imu_data[12];

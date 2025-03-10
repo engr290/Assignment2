@@ -6,8 +6,6 @@
 float imu_data[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};  // initialize to 0
  
 
-// TODO
-// Check feedback
 void init_IMU(IMU_SETTING setting){
   c_i2c_start();
   c_i2c_write(IMU_ADDR << 1 | 0); // Write address of IMU ( `7 bit address` + `0` )
@@ -19,7 +17,7 @@ void init_IMU(IMU_SETTING setting){
 void get_one_round_IMU_data() {
 
   
-  uint8_t data[14];
+  uint8_t data[14]; // I2C response buffer
 
   c_i2c_start();
   c_i2c_write(IMU_ADDR << 1 | 0); // Write address of IMU ( `7 bit address` + `0` )
@@ -33,12 +31,15 @@ void get_one_round_IMU_data() {
     data[i] = c_i2c_read_ack();
   data[13] = c_i2c_read_nack();
 
-  imu_data[6] = ( ((int16_t)data[0] << 8) | data[1] ) / 16384.0; // x
-  imu_data[7] = ( ((int16_t)data[2] << 8) | data[3] ) / 16384.0; // y
-  imu_data[8] = ( ((int16_t)data[4] << 8) | data[5] ) / 16384.0; // z
-  imu_data[9] = ( ((int16_t)data[8] << 8) | data[9] ) / 131.0;    // roll
-  imu_data[10] = ( ((int16_t)data[10] << 8) | data[11] ) / 131.0;  // pitch
-  imu_data[11] = ( ((int16_t)data[12] << 8) | data[13] ) / 131.0;  // yaw
+
+  // TODO
+  // Modify it based on the setting
+  imu_data[6] = ( ((int16_t)data[0] << 8) | data[1] ) / ACCEL_SCALE; // x
+  imu_data[7] = ( ((int16_t)data[2] << 8) | data[3] ) / ACCEL_SCALE; // y
+  imu_data[8] = ( ((int16_t)data[4] << 8) | data[5] ) / ACCEL_SCALE; // z
+  imu_data[9] = ( ((int16_t)data[8] << 8) | data[9] ) / GYRO_SCALE;    // roll
+  imu_data[10] = ( ((int16_t)data[10] << 8) | data[11] ) / GYRO_SCALE;  // pitch
+  imu_data[11] = ( ((int16_t)data[12] << 8) | data[13] ) / GYRO_SCALE;  // yaw
 
 }
 
@@ -84,7 +85,6 @@ void get_IMU_data(IMU_SETTING setting){
   if ( fabs(imu_data[5]) < DEAD_ZONE ) 
     imu_data[5] = 0;
 
-  //Serial.println(data / 2048.0);
 
 
 }
